@@ -47,7 +47,7 @@
     <td class="products">
     {% for product in rxn.products %}
         <a href="{{ product.molecule[0].getURL() }}">
-            <img src="data/PDD_DEDS_merge_add17/species/{{ product|replace('#','%23') }}.png" alt="{{ product }}" title="{{ product }}, MW = {{ "%.2f g/mol"|format(product.molecule[0].getMolecularWeight() * 1000) }}">
+            <img src="{{ "data/" ~ mech ~ "/species/" ~ product|replace('#','%23') }}.png" alt="{{ product }}" title="{{ product }}, MW = {{ "%.2f g/mol"|format(product.molecule[0].getMolecularWeight() * 1000) }}">
         </a>
         {% if not loop.last %}
         + 
