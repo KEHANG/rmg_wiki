@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<style type="text/css">
+    table.spciesList {
+        width: 100%;
+    }
+    table.spciesList th {
+        text-align: left;
+    }
+    td.species {
+        text-align: center;
+    }
+    td.species img, {
+        horizontal-align: middle;
+        display: inline;
+    }
+
+</style>
+</head>
+<body>
+<h4>Top Radical Species:</h4>
+
+<table class="spciesList">
+<tr><th>Index</th><th style="text-align: center;">Species</th><th>Mole Fraction</th></tr>
+{% for tup in top_rad_list[:disp_num] %}
+<tr class="reaction">
+    <td class="index"><a href="{{ tup[0].molecule[0].getURL() }}" title="Search on RMG website" class="searchlink">{{ tup[0].index }}.</a></td>
+    <td class="species">
+        <a href="{{ tup[0].molecule[0].getURL() }}">
+            <img src="data/pdd_scratch_add11/species/{{(tup[0]|replace('#','%23')) }}.png" alt="{{ tup[0] }}" title="{{ tup[0] }}, MW = {{ "%.2f g/mol"|format(tup[0].molecule[0].getMolecularWeight() * 1000) }}">
+        </a>
+    </td>
+    <td>{{ tup[1] }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h4>Top Saturated Species:</h4>
+
+<table class="spciesList">
+<tr><th>Index</th><th style="text-align: center;">Species</th><th>Mole Fraction</th></tr>
+{% for tup in top_sat_list[:disp_num] %}
+<tr class="reaction">
+    <td class="index"><a href="{{ tup[0].molecule[0].getURL() }}" title="Search on RMG website" class="searchlink">{{ tup[0].index }}.</a></td>
+    <td class="species">
+        <a href="{{ tup[0].molecule[0].getURL() }}">
+            <img src="{{ "data/" ~ mech ~ "/species/" ~ (tup[0]|replace('#','%23')) }}.png" alt="{{ tup[0] }}" title="{{ tup[0] }}, MW = {{ "%.2f g/mol"|format(tup[0].molecule[0].getMolecularWeight() * 1000) }}">
+        </a>
+    </td>
+    <td>{{ tup[1] }}</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>
