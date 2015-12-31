@@ -28,7 +28,7 @@
     <td class="index"><a href="{{ tup[0].molecule[0].getURL() }}" title="Search on RMG website" class="searchlink">{{ tup[0].index }}.</a></td>
     <td class="species">
         <a href="{{ tup[0].molecule[0].getURL() }}">
-            <img src="data/pdd_scratch_add11/species/{{(tup[0]|replace('#','%23')) }}.png" alt="{{ tup[0] }}" title="{{ tup[0] }}, MW = {{ "%.2f g/mol"|format(tup[0].molecule[0].getMolecularWeight() * 1000) }}">
+            <img src="{{ "data/" ~ mech ~ "/species/" ~ (tup[0]|replace('#','%23')) }}.png" alt="{{ tup[0] }}" title="{{ tup[0] }}, MW = {{ "%.2f g/mol"|format(tup[0].molecule[0].getMolecularWeight() * 1000) }}">
         </a>
     </td>
     <td>{{ tup[1] }}</td>
