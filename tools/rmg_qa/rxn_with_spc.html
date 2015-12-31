@@ -36,7 +36,7 @@
     <td class="reactants">
     {% for reactant in rxn.reactants %}
         <a href="{{ reactant.molecule[0].getURL() }}">
-            <img src="data/PDD_DEDS_merge_add17/species/{{(reactant|replace('#','%23')) }}.png" alt="{{ reactant }}" title="{{ reactant }}, MW = {{ "%.2f g/mol"|format(reactant.molecule[0].getMolecularWeight() * 1000) }}">
+            <img src="{{ "data/" ~ mech ~ "/species/" ~ reactant|replace('#','%23') }}.png" alt="{{ reactant }}" title="{{ reactant }}, MW = {{ "%.2f g/mol"|format(reactant.molecule[0].getMolecularWeight() * 1000) }}">
         </a>
         {% if not loop.last %}
         + 
