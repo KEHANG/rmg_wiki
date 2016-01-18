@@ -1,6 +1,6 @@
 ## tools:
 
-- How to only generate reactions you want?
+- How to only generate reactions you want? (need define input file and save chemkin files)
 
 ## wiki:
 
