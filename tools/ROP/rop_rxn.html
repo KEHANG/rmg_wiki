@@ -53,7 +53,7 @@
         {% endif %}        
     {% endfor %}
     </td>
-    <td class="flux">{{ "%.2f "|format(top_flux_list[reactions.index(rxn)]*(10**12)) }}</td>
+    <td class="flux">{{ "%.2f "|format(top_flux_list[reactions.index(rxn)]*(10**10)) }}</td>
     <td class="family">{{ rxn.getSource() }}</td>
 </tr>
 {% endfor %}
