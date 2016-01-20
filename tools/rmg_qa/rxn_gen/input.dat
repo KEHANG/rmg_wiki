@@ -1,0 +1,7 @@
+PATHWAY
+
+R_Addition_MultipleBond: C=C[CH2] + C=Cc1ccccc1 == C=CCC[CH]c1ccccc1
+
+R_Addition_MultipleBond: C=C[CH]C + C=Cc1ccccc1 == C=CC(C)C[CH]c1ccccc1
+
+END
