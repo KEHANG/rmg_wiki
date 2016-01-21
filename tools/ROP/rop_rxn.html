@@ -35,7 +35,7 @@
     <td class="reactants">
     {% for reactant in rxn.reactants %}
         <a href="{{ reactant.molecule[0].getURL() }}">
-            <img src="{{ "data/" ~ mech ~ "/species/" ~ reactant|replace('#','%23') }}.png" alt="{{ reactant }}" title="{{ reactant }}, MW = {{ "%.2f g/mol"|format(reactant.molecule[0].getMolecularWeight() * 1000) }}">
+            <img src="{{ "../data/" ~ mech ~ "/species/" ~ reactant|replace('#','%23') }}.png" alt="{{ reactant }}" title="{{ reactant }}, MW = {{ "%.2f g/mol"|format(reactant.molecule[0].getMolecularWeight() * 1000) }}">
         </a>
         {% if not loop.last %}
         + 
@@ -46,7 +46,7 @@
     <td class="products">
     {% for product in rxn.products %}
         <a href="{{ product.molecule[0].getURL() }}">
-            <img src="{{ "data/" ~ mech ~ "/species/" ~ product|replace('#','%23') }}.png" alt="{{ product }}" title="{{ product }}, MW = {{ "%.2f g/mol"|format(product.molecule[0].getMolecularWeight() * 1000) }}">
+            <img src="{{ "../data/" ~ mech ~ "/species/" ~ product|replace('#','%23') }}.png" alt="{{ product }}" title="{{ product }}, MW = {{ "%.2f g/mol"|format(product.molecule[0].getMolecularWeight() * 1000) }}">
         </a>
         {% if not loop.last %}
         + 
