@@ -1,6 +1,7 @@
 import csv
 import numpy
 from openpyxl import Workbook
+from rmgpy.chemkin import getSpeciesIdentifier
 
 """
 Assume ckcsv contains only one Soln
@@ -155,3 +156,40 @@ def saveROPXlsxFromCKCSV(ckcsvFile, xlsx_file, top_num):
         except KeyError:
             print "{} does not exist in spc_indiv_dict!".format(species_string)
     wb.save(xlsx_file)
+
+def getFluxGraphEdgesDict(spc_rop_dict, core_reactions):
+    
+    graph_edges_dict = {}
+    for rxn in core_reactions:
+        for pair in rxn.pairs:
+            if pair in graph_edges_dict:
+                # get flux from spc_rop_dict
+                species_string = getSpeciesIdentifier(pair[0])
+                flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
+                if len(flux) > 0:
+                    graph_edges_dict[pair][rxn] = flux
+            elif (pair[1], pair[0]) in graph_edges_dict:
+                # get flux from spc_rop_dict
+                species_string = getSpeciesIdentifier(pair[1])
+                flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
+                if len(flux) > 0:
+                    graph_edges_dict[(pair[1], pair[0])][rxn] = flux
+            else:
+                # get flux from spc_rop_dict
+                graph_edges_dict[pair] = {}
+                species_string = getSpeciesIdentifier(pair[0])
+                flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
+                if len(flux) > 0:
+                    graph_edges_dict[pair][rxn] = flux
+    return graph_edges_dict
+
+def getROPFlux(spc_rop_dict, species_string, rxn_index):
+
+    flux_tup_list = spc_rop_dict[species_string]
+    for flux_tup in flux_tup_list:
+        header = flux_tup[0]
+        rxnNum = int(header.split("#")[1].split('_')[0])
+        if rxnNum == rxn_index:
+            flux = flux_tup[1]
+            return flux
+    return []
