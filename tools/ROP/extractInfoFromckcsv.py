@@ -184,12 +184,15 @@ def getFluxGraphEdgesDict(spc_rop_dict, core_reactions):
     return graph_edges_dict
 
 def getROPFlux(spc_rop_dict, species_string, rxn_index):
-
-    flux_tup_list = spc_rop_dict[species_string]
-    for flux_tup in flux_tup_list:
-        header = flux_tup[0]
-        rxnNum = int(header.split("#")[1].split('_')[0])
-        if rxnNum == rxn_index:
-            flux = flux_tup[1]
-            return flux
+    """
+    get the flux (numpy:array) for a given species and given rxn
+    """
+    if species_string in spc_rop_dict:
+        flux_tup_list = spc_rop_dict[species_string]
+        for flux_tup in flux_tup_list:
+            header = flux_tup[0]
+            rxnNum = int(header.split("#")[1].split('_')[0])
+            if rxnNum == rxn_index:
+                flux = flux_tup[1]
+                return flux
     return []
