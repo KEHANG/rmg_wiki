@@ -1,7 +1,8 @@
 from rmgpy.data.rmg import database
-from rmgpy.rmg.model import getFamily
+from rmgpy.rmg.model import getFamilyLibraryObject
 from rmgpy.kinetics import KineticsData
 from rmgpy.data.kinetics.family import TemplateReaction
+from rmgpy.rmg.model import Species
 
 def pathwayGenerator(reactants, products, rmg, only_families):
 	genRxn = database.kinetics.generateReactionsFromFamilies
@@ -34,7 +35,7 @@ def pathwayGenerator(reactants, products, rmg, only_families):
 	        spec.generateTransportData(database)
 
 	for reaction in rmg.reactionModel.newReactionList:
-	    family = getFamily(reaction.family)
+	    family = getFamilyLibraryObject(reaction.family)
 
 	    # If the reaction already has kinetics (e.g. from a library),
 	    # assume the kinetics are satisfactory
@@ -66,6 +67,38 @@ def pathwayGenerator(reactants, products, rmg, only_families):
 	        # If this is going to be run through pressure dependence code,
 	        # we need to make sure the barrier is positive.
 	        reaction.fixBarrierHeight(forcePositive=True)
+
+def loadSpeciesDictionary(path):
+    """
+    Very similar method with `loadSpeciesDictionary` in RMG-Py. Here this method
+    doesn't generateResonanceIsomers for the created species, will just keep it 
+    as it is.
+    """
+    speciesDict = {}
+    
+    inerts = [Species().fromSMILES(inert) for inert in ('[He]', '[Ne]', 'N#N', '[Ar]')]
+    with open(path, 'r') as f:
+        adjlist = ''
+        for line in f:
+            if line.strip() == '' and adjlist.strip() != '':
+                # Finish this adjacency list
+                species = Species().fromAdjacencyList(adjlist)
+                label = species.label
+                for inert in inerts:
+                    if inert.isIsomorphic(species):
+                        species.reactive = False
+                        break
+                speciesDict[label] = species
+                adjlist = ''
+            else:
+                if "InChI" in line:
+                    line = line.split()[0] + '\n'
+                if '//' in line:
+                    index = line.index('//')
+                    line = line[0:index]
+                adjlist += line
+
+    return speciesDict
 
 def loadInput(filename):
 	reactants_list = []
