@@ -59,16 +59,16 @@ def getROPFromCKCSV(ckcsvFile):
                     units = row[1].strip()[1:-1].lower()
                     header = ''
                     contentCol = numpy.array([float(r) for r in row[2:]], numpy.float)
-                    if tokens[3] == 'Total':
+                    if tokens[-1] == 'Total':
                     	header += species_string + ' ROP ' + tokens[2] \
-                    	+ ' ' + tokens[3] + '_(' + units + ')'
+                    	+ ' ' + tokens[-1] + '_(' + units + ')'
                         if species_string not in spc_total_dict:
                             spc_total_dict[species_string] = (header, contentCol)
                         else:
                             raise Exception("ckcsv file has two {} which is not in proper format!".format(header))
-                    else: # where tokens[3] is something like GasRxn#123
+                    else: # where tokens[-1] is something like GasRxn#123
                     	header += species_string + ' ROP ' \
-                    	+ tokens[3] + '_(' + units + ')'
+                    	+ tokens[-1] + '_(' + units + ')'
                         if species_string not in spc_indiv_dict:
                             spc_indiv_dict[species_string] = [(header, contentCol)]
                         else:
