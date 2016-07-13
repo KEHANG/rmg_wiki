@@ -1,3 +1,7 @@
 **/.ipynb_checkpoints/**
 *.png
 *.pyc
+
+tools/data/*
+tools/rmg_qa/rxn_gen/*
+tools/fun_features/data/*
