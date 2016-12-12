@@ -180,12 +180,23 @@ def getFluxGraphEdgesDict(spc_rop_dict, core_reactions):
                 flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
                 if len(flux) > 0:
                     graph_edges_dict[pair][rxn] = flux
+                else:
+                    # for rxns like PDD + rad4 == PDD + rad1
+                    species_string = getSpeciesIdentifier(pair[1])
+                    flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
+                    if len(flux) > 0:
+                        graph_edges_dict[pair][rxn] = -flux
             elif (pair[1], pair[0]) in graph_edges_dict:
                 # get flux from spc_rop_dict
                 species_string = getSpeciesIdentifier(pair[1])
                 flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
                 if len(flux) > 0:
                     graph_edges_dict[(pair[1], pair[0])][rxn] = flux
+                else:
+                    species_string = getSpeciesIdentifier(pair[0])
+                    flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
+                    if len(flux) > 0:
+                        graph_edges_dict[(pair[1], pair[0])][rxn] = -flux
             else:
                 # get flux from spc_rop_dict
                 graph_edges_dict[pair] = {}
@@ -193,6 +204,11 @@ def getFluxGraphEdgesDict(spc_rop_dict, core_reactions):
                 flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
                 if len(flux) > 0:
                     graph_edges_dict[pair][rxn] = flux
+                else:
+                    species_string = getSpeciesIdentifier(pair[1])
+                    flux = getROPFlux(spc_rop_dict, species_string, rxn.index)
+                    if len(flux) > 0:
+                        graph_edges_dict[pair][rxn] = -flux
     return graph_edges_dict
 
 def getROPFlux(spc_rop_dict, species_string, rxn_index):
